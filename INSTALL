@@ -1,0 +1,9 @@
+Building Futplaycoin
+
+See doc/readme-qt.rst for instructions on building Futplaycoin Qt,
+the intended-for-end-users, nice-graphical-interface, reference
+implementation of Futplaycoin.
+
+See doc/build-*.txt for instructions on building Futplaycoind,
+the intended-for-services, no-graphical-interface, reference
+implementation of Futplaycoin.

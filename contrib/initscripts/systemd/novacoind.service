@@ -1,0 +1,11 @@
+[Unit]
+Description=Futplaycoin daemon serivce
+After=network.target
+
+[Service]
+Type=simple
+User=Futplaycoin
+ExecStart=/opt/Futplaycoin/Futplaycoind
+
+[Install]
+WantedBy=multi-user.target

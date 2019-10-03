@@ -1,0 +1,2 @@
+debian/bin/Futplaycoind usr/bin
+src/Futplaycoind usr/lib/Futplaycoin

@@ -1,0 +1,13 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Futplaycoin
+Comment=Futplaycoin P2P Cryptocurrency
+Comment[ru]=Futplaycoin, P2P криптовалюта
+Comment[fr]=Futplaycoin, monnaie virtuelle cryptographique pair à pair
+Comment[tr]=Futplaycoin, eşten eşe kriptografik sanal para birimi
+Exec=/usr/bin/Futplaycoin-qt
+Terminal=false
+Type=Application
+Icon=/usr/share/pixmaps/Futplaycoin80.xpm
+MimeType=x-scheme-handler/Futplaycoin;
+Categories=Office;

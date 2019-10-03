@@ -1,0 +1,5 @@
+Futplaycoin-qt usr/bin
+share/pixmaps/Futplaycoin32.xpm usr/share/pixmaps
+share/pixmaps/Futplaycoin80.xpm usr/share/pixmaps
+debian/Futplaycoin-qt.desktop usr/share/applications
+debian/Futplaycoin-qt.protocol usr/share/kde4/services/

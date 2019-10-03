@@ -1,0 +1,68 @@
+#!/bin/sh
+
+# PROVIDE: Futplaycoin
+# REQUIRE: LOGIN
+# KEYWORD: shutdown
+
+#
+# Add the following lines to /etc/rc.conf.local or /etc/rc.conf
+# to enable this service:
+#
+# Futplaycoin_enable (bool): Set to NO by default. Set this variable to YES if you want to enable Futplaycoin service.
+# Futplaycoin_config (path): Set to /usr/local/etc/Futplaycoin.conf by default.
+# Futplaycoin_user:  The user account Futplaycoin daemon runs as. It uses 'root' user by default.
+# Futplaycoin_group: The group account Futplaycoin daemon runs as. It uses 'wheel' group by default.
+# Futplaycoin_datadir (str): Default to "/var/db/Futplaycoin". Base data directory.
+
+. /etc/rc.subr
+
+name=Futplaycoin
+rcvar=Futplaycoin_enable
+
+: ${Futplaycoin_enable:=NO}
+: ${Futplaycoin_config=/usr/local/etc/Futplaycoin.conf}
+: ${Futplaycoin_datadir=/var/db/Futplaycoin}
+: ${Futplaycoin_user="root"}
+: ${Futplaycoin_group="wheel"}
+
+required_files=${Futplaycoin_config}
+command=/usr/local/bin/Futplaycoind
+Futplaycoin_chdir=${Futplaycoin_datadir}
+pidfile="${Futplaycoin_datadir}/Futplaycoind.pid"
+stop_cmd=Futplaycoin_stop
+command_args="-conf=${Futplaycoin_config} -datadir=${Futplaycoin_datadir} -daemon -pid=${pidfile}"
+start_precmd="${name}_prestart"
+
+Futplaycoin_create_datadir()
+{
+	echo "Creating data directory"
+	eval mkdir -p ${Futplaycoin_datadir}
+	[ $? -eq 0 ] && chown -R ${Futplaycoin_user}:${Futplaycoin_group} ${Futplaycoin_datadir}
+}
+
+Futplaycoin_prestart()
+{
+	if [ ! -d "${Futplaycoin_datadir}/." ]; then
+		Futplaycoin_create_datadir || return 1
+	fi
+}
+
+Futplaycoin_requirepidfile()
+{
+	if [ ! "0`check_pidfile ${pidfile} ${command}`" -gt 1 ]; then
+		echo "${name} not running? (check $pidfile)."
+		exit 1
+	fi
+}
+
+Futplaycoin_stop()
+{
+    Futplaycoin_requirepidfile
+
+	echo "Stopping ${name}."
+	eval ${command} -conf=${Futplaycoin_config} -datadir=${Futplaycoin_datadir} stop
+	wait_for_pids ${rc_pid}
+}
+
+load_rc_config $name
+run_rc_command "$1"
